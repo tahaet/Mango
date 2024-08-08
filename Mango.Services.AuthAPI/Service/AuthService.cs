@@ -11,13 +11,32 @@ namespace Mango.Services.AuthAPI.Service
         private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly AppDbContext db;
+        private readonly IJwtTokenGenerator jwtTokenGenerator;
 
-        public AuthService(UserManager<ApplicationUser> userManager,RoleManager<IdentityRole> roleManager,AppDbContext db)
+        public AuthService(UserManager<ApplicationUser> userManager,RoleManager<IdentityRole> roleManager,AppDbContext db,IJwtTokenGenerator jwtTokenGenerator)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
             this.db = db;
+            this.jwtTokenGenerator = jwtTokenGenerator;
         }
+
+        public async Task<bool> AssignRole(string email, string roleName)
+        {
+            var user = db.ApplicationUsers.FirstOrDefault(u => u.Email.ToLower() == email.ToLower());
+            if (user != null)
+            {
+                if (!roleManager.RoleExistsAsync(roleName).GetAwaiter().GetResult())
+                {
+                    //create role if it does not exist
+                    roleManager.CreateAsync(new IdentityRole(roleName)).GetAwaiter().GetResult();
+                }
+                await userManager.AddToRoleAsync(user, roleName);
+                return true;
+            }
+            return false;
+        }
+
         public async Task<LoginResponseDto> Login(LoginRequestDto loginRequestDto)
         {
            var user =  db.ApplicationUsers.FirstOrDefault(x=>x.UserName.ToLower()==loginRequestDto.UserName.ToLower());  
@@ -30,6 +49,7 @@ namespace Mango.Services.AuthAPI.Service
                     Token=""
                 };
             }
+            var token = jwtTokenGenerator.GenerateToken(user);
             UserDto userDto = new UserDto()
             {
                 ID = user.Id,
@@ -40,7 +60,7 @@ namespace Mango.Services.AuthAPI.Service
             LoginResponseDto loginResponseDto = new LoginResponseDto()
             {
                 User = userDto,
-                Token = ""
+                Token = token
             };
             return loginResponseDto;
         }
