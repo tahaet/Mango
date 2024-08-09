@@ -46,7 +46,6 @@ namespace Mango.Web.Controllers
             else
             {
                 TempData["error"] = responseDto.Message;
-                ModelState.AddModelError("CustomeError",responseDto.Message);
                 return View(loginRequestDto);
             }
         }
@@ -110,6 +109,7 @@ namespace Mango.Web.Controllers
             identity.AddClaim(new Claim(JwtRegisteredClaimNames.Name, jwt.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Name).Value));
             identity.AddClaim(new Claim(JwtRegisteredClaimNames.Email, jwt.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Email).Value));
             identity.AddClaim(new Claim(ClaimTypes.Name, jwt.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Email).Value));
+            identity.AddClaim(new Claim(ClaimTypes.Role, jwt.Claims.FirstOrDefault(x => x.Type == "role").Value));
             var principal = new ClaimsPrincipal(identity);
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,principal);
