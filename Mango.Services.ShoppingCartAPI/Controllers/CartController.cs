@@ -14,7 +14,7 @@ namespace Mango.Services.ShoppingCartAPI.Controllers
     [ApiController]
     public class CartController : ControllerBase
     {
-        private ResponseDto _response;
+        private ResponseDto _response = new ResponseDto();
         private readonly AppDbContext _db;
         private readonly IMapper _mapper;
         private readonly IProductService _productService;
@@ -26,7 +26,7 @@ namespace Mango.Services.ShoppingCartAPI.Controllers
             _productService = productService;
         }
         [HttpPost("CartUpsert")]
-        public async Task<ResponseDto> CartUpsert([FromBody] CartDto cartDto)
+        public async Task<ResponseDto> CartUpsert(CartDto cartDto)
         {
             try
             {
