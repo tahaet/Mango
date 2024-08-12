@@ -28,6 +28,36 @@ namespace Mango.Web.Controllers
             }
             return new CartDto();
         }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> ApplyCoupon(CartDto cartDto)
+        {
+
+            ResponseDto? response = await _cartService.ApplyCouponAsync(cartDto);
+            if (response != null & response.IsSuccess)
+            {
+                TempData["success"] = "Cart updated successfully";
+                return RedirectToAction(nameof(CartIndex));
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveCoupon(CartDto cartDto)
+        {
+            cartDto.CartHeader.CouponCode = "";
+            ResponseDto? response = await _cartService.ApplyCouponAsync(cartDto);
+            if (response != null & response.IsSuccess)
+            {
+                TempData["success"] = "Cart updated successfully";
+                return RedirectToAction(nameof(CartIndex));
+            }
+            return View();
+        }
+
+
         public async Task<IActionResult> Remove(int cartDetailsId)
         {
             var userId = User.Claims.Where(u => u.Type == JwtRegisteredClaimNames.Sub)?.FirstOrDefault()?.Value;
