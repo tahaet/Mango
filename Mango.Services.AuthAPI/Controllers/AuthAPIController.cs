@@ -1,4 +1,5 @@
 ﻿using Azure;
+using Mango.MessageBus;
 using Mango.Services.AuthAPI.Models.Dto;
 using Mango.Services.AuthAPI.Service;
 using Mango.Services.AuthAPI.Service.IService;
@@ -14,10 +15,14 @@ namespace Mango.Services.AuthAPI.Controllers
     public class AuthAPIController : ControllerBase
     {
         private readonly IAuthService authService;
+        private readonly IMessageBus messageBus;
+        private readonly IConfiguration configuration;
         private ResponseDto responseDto;
-        public AuthAPIController(IAuthService authService)
+        public AuthAPIController(IAuthService authService,IMessageBus messageBus,IConfiguration configuration)
         {
             this.authService = authService;
+            this.messageBus = messageBus;
+            this.configuration = configuration;
             responseDto = new ResponseDto();
         }
         [HttpPost("register")]
@@ -30,6 +35,7 @@ namespace Mango.Services.AuthAPI.Controllers
                 responseDto.Message = errorMessage;
                 return BadRequest(responseDto);
             }
+            await messageBus.PublishMessage(registrationRequestDto.Email, configuration.GetValue<string>("TopicAndQueueNames:RegisterUserQueue"));
             return Ok(responseDto);
         }
         [HttpPost("login")]
