@@ -1,4 +1,6 @@
 using Mango.Services.EmailAPI.Data;
+using Mango.Services.ShoppingCartAPI.Extension;
+using Mango.Sevices.EmailAPI.Messaging;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +14,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
 });
-
+builder.Services.AddSingleton<IAzureServiceBusConsumer, AzureServiceBusConsumer>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -29,6 +31,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 ApplyMigration();
+app.UseAzureServiceBusConsumer();
 app.Run();
 void ApplyMigration()
 {
