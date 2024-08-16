@@ -48,9 +48,9 @@ namespace Mango.Web.Controllers
         public async Task<IActionResult> EmailCart(CartDto cartDto)
         {
             var cart = await LoadCartDtoBasednLoggedInUser();
-            var Email = User.Claims.Where(x=>x.Type==JwtRegisteredClaimNames.Email)?.FirstOrDefault()?.Value;   
-
-            ResponseDto? response = await _cartService.EmailCart(cartDto);
+            var Email = User.Claims.Where(x=>x.Type==JwtRegisteredClaimNames.Email)?.FirstOrDefault()?.Value;
+            cart.CartHeader.Email = Email;
+            ResponseDto? response = await _cartService.EmailCart(cart);
             if (response != null & response.IsSuccess)
             {
                 TempData["success"] = "Email wiil be proccessed and sent shortly.";
