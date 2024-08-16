@@ -1,6 +1,6 @@
 using Mango.Services.EmailAPI.Data;
+using Mango.Services.EmailAPI.Messaging;
 using Mango.Services.ShoppingCartAPI.Extension;
-using Mango.Sevices.EmailAPI.Messaging;
 using Mango.Sevices.EmailAPI.Service;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);

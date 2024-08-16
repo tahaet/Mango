@@ -1,11 +1,13 @@
 ﻿using Mango.Web.Models;
 using Mango.Web.Service.IService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace Mango.Web.Controllers
 {
+    [Authorize]
     public class CartController : Controller
     {
         private readonly ICartService _cartService;
@@ -18,6 +20,12 @@ namespace Mango.Web.Controllers
         {
             return View( await LoadCartDtoBasednLoggedInUser());
         }
+
+        public async Task<IActionResult> Checkout()
+        {
+            return View();
+        }
+
         private async Task<CartDto?> LoadCartDtoBasednLoggedInUser()
         {
             var userId = User.Claims.Where(x => x.Type == JwtRegisteredClaimNames.Sub)?.FirstOrDefault()?.Value;

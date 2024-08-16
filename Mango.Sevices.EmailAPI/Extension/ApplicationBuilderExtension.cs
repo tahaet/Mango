@@ -1,4 +1,5 @@
-﻿using Mango.Sevices.EmailAPI.Messaging;
+﻿
+using Mango.Services.EmailAPI.Messaging;
 
 namespace Mango.Services.ShoppingCartAPI.Extension
 {
