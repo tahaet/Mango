@@ -43,7 +43,10 @@ namespace Mango.Web.Controllers
             }
             return View();
         }
-
+        public async Task<IActionResult> Confirmation(int orderId)
+        {
+            return View(orderId);
+        }
         private async Task<CartDto?> LoadCartDtoBasednLoggedInUser()
         {
             var userId = User.Claims.Where(x => x.Type == JwtRegisteredClaimNames.Sub)?.FirstOrDefault()?.Value;
