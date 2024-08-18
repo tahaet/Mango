@@ -1,6 +1,6 @@
 ﻿namespace Mango.Services.RewardAPI.Models
 {
-    public class Rewards
+    public class Reward
     {
         public int Id { get; set; }
         public string UserId { get; set; }
