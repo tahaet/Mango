@@ -93,7 +93,7 @@ namespace Mango.Services.OrderAPI.Controllers
                 OrderHeader orderHeader = await _db.OrderHeaders.
                     FirstOrDefaultAsync(x => x.OrderHeaderId == stripeRequestDto.OrderHeader.OrderHeaderId);
                 orderHeader.StripeSessionId = session.Id;
-                
+
                 _db.OrderHeaders.Update(orderHeader);
                 await _db.SaveChangesAsync();
                 _response.Result = stripeRequestDto;
