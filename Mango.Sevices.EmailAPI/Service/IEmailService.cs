@@ -7,6 +7,6 @@ namespace Mango.Sevices.EmailAPI.Service
     {
         Task EmailCartAndLog(CartDto cartDto);
         Task RegisterUserEmailAndLog(string email);
-        Task LogOrderPlaces(RewardsMessage rewardsMessage);
+        Task LogOrderPlaced(RewardsMessage rewardsMessage);
     }
 }
