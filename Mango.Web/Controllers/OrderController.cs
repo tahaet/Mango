@@ -1,6 +1,10 @@
-﻿using Mango.Web.Service.IService;
+﻿using Mango.Web.Models;
+using Mango.Web.Service.IService;
+using Mango.Web.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Mango.Web.Controllers
 {
@@ -17,5 +21,26 @@ namespace Mango.Web.Controllers
         {
             return View();
         }
-    }
+		[HttpGet]
+		public IActionResult GetAll(string status)
+		{
+			IEnumerable<OrderHeaderDto> list;
+			string userId = "";
+			if (!User.IsInRole(SD.RoleAdmin))
+			{
+				userId = User.Claims.Where(u => u.Type == JwtRegisteredClaimNames.Sub)?.FirstOrDefault()?.Value;
+			}
+			ResponseDto response = _orderService.GetAllOrder(userId).GetAwaiter().GetResult();
+			if (response != null && response.IsSuccess)
+			{
+				list = JsonConvert.DeserializeObject<List<OrderHeaderDto>>(Convert.ToString(response.Result));
+				
+			}
+			else
+			{
+				list = new List<OrderHeaderDto>();
+			}
+			return Json(new { data = list.OrderByDescending(u => u.OrderHeaderId) });
+		}
+	}
 }

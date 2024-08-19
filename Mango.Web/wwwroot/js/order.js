@@ -1,4 +1,4 @@
-﻿const dataTable;
+﻿var dataTable;
 
 $(document).ready(() => {
     loadDataTable();
@@ -6,7 +6,7 @@ $(document).ready(() => {
 
 function loadDataTable() {
     dataTable = $("#tblData").DataTable({
-        "ajax": { url: "/order/getall}" },
+        "ajax": { url: "/order/getall" },
         "columns": [
             { data: 'orderHeaderId', "width": "5%" },
             { data: 'email', "width": "25%" },
@@ -23,6 +23,6 @@ function loadDataTable() {
                 },
                 "width": "10%"
             } 
-
+        ],
         })
 }
