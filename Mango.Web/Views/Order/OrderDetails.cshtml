@@ -1,5 +1,29 @@
 ﻿@model OrderHeaderDto
 @using Mango.Web.Utility
+﻿@{
+
+	var status = Context.Request.Query["status"];
+	var approved = "";
+	var readyforpickup = "";
+	var cancelled = "";
+	var all = "";
+
+	switch (status)
+	{
+		case "approved":
+			approved = "active text-white bg-secondary";
+			break;
+		case "readyforpickup":
+			readyforpickup = "active text-white bg-secondary";
+			break;
+		case "cancelled":
+			cancelled = "active text-white bg-secondary";
+			break;
+		default:
+			all = "active text-white bg-secondary";
+			break;
+	}
+}
 
 
 <form method="post">
@@ -17,16 +41,16 @@
 					</div>
 				</div>
 						<ul class="list-group list-group-horizontal-sm pt-2">
-					<a style="text-decoration:none" asp-controller="Order" asp-action="OrderIndex" asp-route-status="approved">
+					<a style="text-decoration:none @approved" asp-controller="Order" asp-action="OrderIndex" asp-route-status="approved">
 						<li class="list-group-item ">Approved</li>
 					</a>
-					<a style="text-decoration:none" asp-controller="Order" asp-action="OrderIndex" asp-route-status="readyforpickup">
+					<a style="text-decoration:none @readyforpickup" asp-controller="Order" asp-action="OrderIndex" asp-route-status="readyforpickup">
 					<li class="list-group-item ">Ready for Pikcup</li>
 					</a>
-					<a style="text-decoration:none" asp-controller="Order" asp-action="OrderIndex" asp-route-status="cancelled">
+					<a style="text-decoration:none @cancelled" asp-controller="Order" asp-action="OrderIndex" asp-route-status="cancelled">
 					<li class="list-group-item ">Cancelled</li>
 					</a>
-					<a style="text-decoration:none" asp-controller="Order" asp-action="OrderIndex" asp-route-status="all">
+					<a style="text-decoration:none @all" asp-controller="Order" asp-action="OrderIndex" asp-route-status="all">
 					<li class="list-group-item ">All</li>
 					</a>
 				</ul>
