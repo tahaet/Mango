@@ -36,9 +36,13 @@
                                     <li><a class="dropdown-item" asp-controller="Coupon" asp-action="CouponIndex">Coupon</a></li>
                                      <li><hr class="dropdown-divider"></li>
                                      <li><a class="dropdown-item" asp-controller="Product" asp-action="ProductIndex">Product</a></li>
-                                     <li><hr class="dropdown-divider"></li>
                                   </ul>
                             </li>
+                               <li class="nav-item">
+                            <a class="nav-link " asp-area="" asp-controller="Order" asp-action="OrderIndex">
+                               Manage Order
+                            </a>
+                             </li>   
                              <li class="nav-item">
                             <a class="nav-link " asp-area="" asp-controller="Cart" asp-action="CartIndex">
                                 &nbsp; <i class="bi bi-cart"></i>&nbsp;
