@@ -102,6 +102,41 @@ namespace Mango.Services.OrderAPI.Controllers
             }
             return _response;
         }
+
+        [Authorize]
+        [HttpPost("UpdateOrderStatus/{orderId:int}")]
+        public async Task<ResponseDto> UpdateOrderStatus(int orderId, [FromBody] string newStatus)
+        {
+            try
+            {
+                OrderHeader orderHeader = await _db.OrderHeaders.FirstOrDefaultAsync(o=>o.OrderHeaderId == orderId);
+                if (orderHeader != null)
+                {
+                    if (newStatus == SD.Status_Cancelled)
+                    {
+                        //refund logic
+                        var options = new RefundCreateOptions
+                        {
+                            Reason = RefundReasons.RequestedByCustomer,
+                            PaymentIntent = orderHeader.PaymentIntentId
+                        };
+
+                        var service = new RefundService();
+                        Refund refund = service.Create(options);
+                    }
+                    orderHeader.Status = newStatus;
+                    await _db.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                _response.Message = ex.Message;
+                _response.IsSuccess = false;
+            }
+
+            return _response;
+        }
+
         [Authorize]
         [HttpPost("CreateStripeSession")]
         public async Task <ResponseDto> CreateStripeSession([FromBody] StripeRequestDto stripeRequestDto)
