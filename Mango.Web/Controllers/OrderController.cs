@@ -59,7 +59,7 @@ namespace Mango.Web.Controllers
 
 
 		[Authorize]
-		public async Task<IActionResult> OrderDetail(int orderId)
+		public async Task<IActionResult> OrderDetails(int orderId)
 		{
 			OrderHeaderDto orderHeaderDto = new OrderHeaderDto();
 			string userId = User.Claims.Where(u => u.Type == JwtRegisteredClaimNames.Sub)?.FirstOrDefault()?.Value;
@@ -84,7 +84,7 @@ namespace Mango.Web.Controllers
             if (response != null && response.IsSuccess)
             {
                 TempData["success"] = "Status updated successfully";
-                return RedirectToAction(nameof(OrderDetail), new { orderId = orderId });
+                return RedirectToAction(nameof(OrderDetails), new { orderId = orderId });
             }
             return View();
         }
@@ -96,7 +96,7 @@ namespace Mango.Web.Controllers
             if (response != null && response.IsSuccess)
             {
                 TempData["success"] = "Status updated successfully";
-                return RedirectToAction(nameof(OrderDetail), new { orderId = orderId });
+                return RedirectToAction(nameof(OrderDetails), new { orderId = orderId });
             }
             return View();
         }
@@ -108,7 +108,7 @@ namespace Mango.Web.Controllers
             if (response != null && response.IsSuccess)
             {
                 TempData["success"] = "Status updated successfully";
-                return RedirectToAction(nameof(OrderDetail), new { orderId = orderId });
+                return RedirectToAction(nameof(OrderDetails), new { orderId = orderId });
             }
             return View();
         }
