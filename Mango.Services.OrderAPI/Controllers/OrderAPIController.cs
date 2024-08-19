@@ -61,6 +61,22 @@ namespace Mango.Services.OrderAPI.Controllers
         }
 
         [Authorize]
+        [HttpGet("GetOrder/{id:int}")]
+        public async Task<ResponseDto?> Get(int id)
+        {
+            try
+            {
+                OrderHeader orderHeader = await _db.OrderHeaders.Include(u => u.OrderDetails).FirstOrDefaultAsync(u => u.OrderHeaderId == id);
+                _response.Result = _mapper.Map<OrderHeaderDto>(orderHeader);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.Message = ex.Message;
+            }
+            return _response;
+        }
+        [Authorize]
         [HttpPost("CreateStripeSession")]
         public async Task <ResponseDto> CreateStripeSession([FromBody] StripeRequestDto stripeRequestDto)
         {
