@@ -77,6 +77,32 @@ namespace Mango.Services.OrderAPI.Controllers
             return _response;
         }
         [Authorize]
+        [HttpGet("GetOrders")]
+        public async Task<ResponseDto?> Get(string? userId = "")
+        {
+            try
+            {
+                IEnumerable<OrderHeader> orders;
+                if (User.IsInRole(SD.RoleAdmin))
+                {
+                    orders = await _db.OrderHeaders.Include(o=>o.OrderDetails).OrderByDescending(o=>o.OrderHeaderId).ToListAsync();
+                }
+                else
+                {
+                    orders = await _db.OrderHeaders.Include(o=>o.OrderDetails).Where(o=>o.UserId==userId).
+                        OrderByDescending(o => o.OrderHeaderId).ToListAsync();
+                }
+                _response.Result = _mapper.Map<IEnumerable<OrderHeaderDto>>(orders);
+            
+            }
+            catch (Exception ex)
+            {
+                _response.Message=ex.Message;
+                _response.IsSuccess = false;
+            }
+            return _response;
+        }
+        [Authorize]
         [HttpPost("CreateStripeSession")]
         public async Task <ResponseDto> CreateStripeSession([FromBody] StripeRequestDto stripeRequestDto)
         {
