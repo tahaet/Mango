@@ -104,6 +104,24 @@
                                     </div>
                                 </li>
                             </ul>
+
+                            @if (User.IsInRole(SD.RoleAdmin))
+                            {
+                                @if (Model.Status == SD.Status_Approved)
+                                {
+                                            <button asp-action="OrderReadyForPickup" asp-route-orderId="@Model.OrderHeaderId" type="submit" class="btn btn-success form-control my-1">Ready for Pickup</button>
+                                }
+                                @if (Model.Status == SD.Status_ReadyForPickup)
+                                {
+                                            <button asp-action="CompleteOrder" asp-route-orderId="@Model.OrderHeaderId" type="submit" class="btn btn-success form-control my-1">Complete Order</button>
+                                }
+
+                                if (Model.Status == SD.Status_Approved || Model.Status == SD.Status_ReadyForPickup)
+                                {
+                                            <button asp-action="CancelOrder" asp-route-orderId="@Model.OrderHeaderId" type="submit" class="btn btn-danger form-control my-1">Cancel Order</button>
+                                }
+                            }
+
                         </div>
                     </div>
                 </div>
