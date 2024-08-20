@@ -53,11 +53,26 @@ namespace Mango.Web.Controllers
             }
             return View(model);
         }
+
+
         [Authorize(Roles =SD.RoleAdmin)]
-        public async Task<IActionResult> ProductEdit()
+        public async Task<IActionResult> ProductEdit(int productId)
         {
-            return View();
+            ResponseDto? response = await _ProductService.GetProductByIdAsync(productId);
+
+            if (response != null && response.IsSuccess)
+            {
+                ProductDto? model = JsonConvert.DeserializeObject<ProductDto>(Convert.ToString(response.Result));
+                return View(model);
+            }
+            else
+            {
+                TempData["error"] = response?.Message;
+            }
+            return NotFound();
         }
+
+
         [HttpPost]
         [Authorize(Roles = SD.RoleAdmin)]
         public async Task<IActionResult> ProductEdit(ProductDto model)
@@ -78,6 +93,7 @@ namespace Mango.Web.Controllers
             }
             return View(model);
         }
+
         [Authorize(Roles = SD.RoleAdmin)]
         public async Task<IActionResult> ProductDelete(int ProductId)
         {
