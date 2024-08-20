@@ -71,7 +71,7 @@ namespace Mango.Web.Controllers
 			}
 			if (!User.IsInRole(SD.RoleAdmin) && userId != orderHeaderDto.UserId)
 			{
-				return NotFound();
+				return StatusCode(403);
 			}
 			return View(orderHeaderDto);
 		}
