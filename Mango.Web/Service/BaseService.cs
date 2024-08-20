@@ -15,7 +15,7 @@ namespace Mango.Web.Service
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ITokenProvider _tokenProvider;
 
-        public BaseService(IHttpClientFactory httpClientFactory,ITokenProvider tokenProvider)
+        public BaseService(IHttpClientFactory httpClientFactory, ITokenProvider tokenProvider)
         {
             _httpClientFactory = httpClientFactory;
             _tokenProvider = tokenProvider;
@@ -27,11 +27,14 @@ namespace Mango.Web.Service
             {
                 HttpClient client = _httpClientFactory.CreateClient("MangoAPI");
                 HttpRequestMessage message = new();
-                if(requestDto.ContentType == SD.ContentType.MultipartFormData)
+                if (requestDto.ContentType == SD.ContentType.MultipartFormData)
                 {
                     message.Headers.Add("Accept", "*/*");
                 }
-                message.Headers.Add("Accept", "application/json");
+                else
+                {
+                    message.Headers.Add("Accept", "application/json");
+                }
 
                 //token
                 if (withBearer)
@@ -44,39 +47,33 @@ namespace Mango.Web.Service
                 if (requestDto.ContentType == SD.ContentType.MultipartFormData)
                 {
                     var content = new MultipartFormDataContent();
-                    foreach(var prop in requestDto.Data.GetType().GetProperties())
+                    foreach (var prop in requestDto.Data.GetType().GetProperties())
                     {
                         var value = prop.GetValue(requestDto.Data);
-                        if(value is FormFile)
+                        if (value is FormFile)
                         {
                             var file = (FormFile)value;
-                            if(file is not null)
+                            if (file is not null)
                             {
                                 content.Add(new StreamContent(file.OpenReadStream()), prop.Name, file.FileName);
                             }
 
 
                         }
-				        else
-				        {   
-					            content.Add(new StringContent(value == null ? "" : value.ToString()), prop.Name);
-				        }
+                        else
+                        {
+                            content.Add(new StringContent(value == null ? "" : value.ToString()), prop.Name);
+                        }
                     }
-					message.Content = content;
-				}
-				else
-				{
-					if (requestDto.Data != null)
-					{
-						message.Content = new StringContent(JsonConvert.SerializeObject(requestDto.Data), Encoding.UTF8, "application/json");
-					}
-				}
-
-				if (requestDto.Data != null)
-                {
-                    message.Content = new StringContent(JsonConvert.SerializeObject(requestDto.Data), Encoding.UTF8, "application/json");
+                    message.Content = content;
                 }
-                
+                else
+                {
+                    if (requestDto.Data != null)
+                    {
+                        message.Content = new StringContent(JsonConvert.SerializeObject(requestDto.Data), Encoding.UTF8, "application/json");
+                    }
+                }
 
                 HttpResponseMessage? apiResponse = null;
 
