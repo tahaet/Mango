@@ -4,7 +4,6 @@ using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using System.Text;
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddOcelot();
 var settingsSection = builder.Configuration.GetSection("ApiSettings");
 
 var secret = settingsSection.GetValue<string>("Secret");
@@ -30,9 +29,10 @@ builder.Services.AddAuthentication(x =>
         ValidateAudience = true
     };
 });
+builder.Services.AddOcelot();
 var app = builder.Build();
-app.UseOcelot();
 
 app.MapGet("/", () => "Hello World!");
 
+app.UseOcelot();
 app.Run();
