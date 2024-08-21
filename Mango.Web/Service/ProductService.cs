@@ -51,7 +51,7 @@ namespace Mango.Web.Service
             {
                 ApiType = SD.ApiType.GET,
                 Url = SD.ProductAPIBase + "/api/Product/" + id
-            }, withBearer: false);
+            });
         }
 
         public async Task<ResponseDto?> UpdateProductsAsync(ProductDto ProductDto)
