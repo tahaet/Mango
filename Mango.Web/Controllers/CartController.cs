@@ -136,6 +136,11 @@ namespace Mango.Web.Controllers
             ResponseDto? response = await _cartService.RemoveFromCartAsync(cartDetailsId);
             if (response != null & response.IsSuccess)
             {
+                var cartDto = JsonConvert.DeserializeObject<CartDto>(
+                  Convert.ToString(_cartService.GetCartByUserIdAsnyc(userId).GetAwaiter().GetResult().Result)
+                   );
+                int? count = cartDto?.CartDetails?.Count();
+                HttpContext.Session.SetInt32(SD.CartSession, count??0);
                 TempData["success"] = "Cart updated successfully";
                 return RedirectToAction(nameof(CartIndex));
             }

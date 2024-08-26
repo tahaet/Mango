@@ -2,8 +2,10 @@ using IdentityModel;
 using Mango.Web.Models;
 using Mango.Web.Service;
 using Mango.Web.Service.IService;
+using Mango.Web.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Diagnostics;
@@ -64,11 +66,13 @@ namespace Mango.Web.Controllers
         [ActionName("ProductDetails")]
         public async Task<IActionResult> ProductDetails(ProductDto productDto)
         {
+            var userId = User.Claims.Where(u => u.Type == JwtClaimTypes.Subject)?.FirstOrDefault()?.Value;
+
             CartDto cartDto = new CartDto()
             {
                 CartHeader = new CartHeaderDto
                 {
-                    UserId = User.Claims.Where(u => u.Type == JwtClaimTypes.Subject)?.FirstOrDefault()?.Value
+                    UserId = userId
                 }
             };
 
@@ -85,6 +89,10 @@ namespace Mango.Web.Controllers
 
             if (response != null && response.IsSuccess)
             {
+                HttpContext.Session.SetInt32(SD.CartSession,JsonConvert.DeserializeObject<CartDto>(
+                    Convert.ToString(_cartService.GetCartByUserIdAsnyc(userId).Result.Result)
+                    ).CartDetails.Count());
+
                 TempData["success"] = "Item has been added to the Shopping Cart";
                 return RedirectToAction(nameof(Index));
             }
