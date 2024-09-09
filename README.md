@@ -1,84 +1,51 @@
-Full-Stack E-Commerce Application
-🛍️ Overview
-This project is a comprehensive E-Commerce application built using modern technologies and best practices. It features a robust backend API, a user-friendly frontend, secure authentication, payment processing, and cloud messaging integration.
-✨ Features
+# E-Commerce Application
 
-Full-stack application with .NET 8 REST APIs (backend) and .NET 8 MVC (frontend)
-SQL Server for data storage
-Entity Framework Core for data access using Code First approach
-JWT-based authentication with role-based authorization using .NET Identity
-Cart and Orders management
-Stripe payment integration with coupon functionality
-API Gateway implementation using Ocelot
-Azure Service Bus messaging integration (queue and topic)
+This project is a full-stack E-Commerce application developed with .NET 8. It features a REST API backend and a .NET 8 MVC frontend, providing a robust and secure platform for online shopping. The application integrates several advanced features, including payment processing, messaging, and API management.
 
-🛠️ Tech Stack
-ComponentTechnologyBackend.NET 8 REST APIsFrontend.NET 8 MVCDatabaseSQL ServerORMEntity Framework CoreAuthenticationJWT, .NET IdentityPayment ProcessingStripeAPI GatewayOcelotCloud MessagingAzure Service Bus
-🚀 Getting Started
-bashCopy# Clone the repository
-git clone https://github.com/yourusername/ecommerce-app.git
+## Table of Contents
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Database Setup](#database-setup)
+  - [Running the Application](#running-the-application)
+- [Architecture](#architecture)
+- [Security](#security)
+- [Payment Integration](#payment-integration)
+- [Messaging Integration](#messaging-integration)
+- [API Gateway](#api-gateway)
 
-# Navigate to the project directory
-cd ecommerce-app
+## Features
+- **Backend:** Developed using .NET 8 REST APIs to handle all server-side logic.
+- **Frontend:** Built with .NET 8 MVC for dynamic and responsive user interfaces.
+- **Data Storage:** SQL Server is used for persistent data storage.
+- **Data Access:** Entity Framework (EF) is used for data access with a Code First approach.
+- **Security:** Secured API endpoints using JWT with role-based authorization provided by .NET Identity.
+- **Payment Integration:** Stripe payment gateway integrated with support for coupon functionality.
+- **API Gateway:** Implemented using Ocelot for managing multiple API services.
+- **Messaging:** Integrated Azure Service Bus for messaging, supporting both queues and topics.
 
-# Install dependencies
-dotnet restore
+## Technologies Used
+- **Backend:** .NET 8, ASP.NET Core REST APIs
+- **Frontend:** .NET 8 MVC
+- **Database:** SQL Server
+- **ORM:** Entity Framework Core (EF Core)
+- **Authentication & Authorization:** JWT, .NET Identity
+- **Payment Gateway:** Stripe
+- **API Gateway:** Ocelot
+- **Messaging:** Azure Service Bus (Queue and Topic)
 
-# Run the application
-dotnet run
-🔗 API Endpoints
+## Getting Started
 
-GET /api/products: Retrieve all products
-POST /api/orders: Create a new order
-GET /api/cart: Retrieve user's cart
-... (add more endpoints as needed)
+### Prerequisites
+- [.NET 8 SDK](https://dotnet.microsoft.com/download)
+- [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
+- [Azure Account](https://azure.microsoft.com/en-us/free/) (for Service Bus integration)
+- [Stripe Account](https://stripe.com/) (for payment integration)
 
-🖥️ Frontend Pages
-
-Home Page: /
-Product Catalog: /products
-Shopping Cart: /cart
-Checkout: /checkout
-... (add more pages as needed)
-
-💾 Database Schema
-mermaidCopyerDiagram
-    CUSTOMER ||--o{ ORDER : places
-    CUSTOMER {
-        string id
-        string name
-        string email
-    }
-    ORDER ||--|{ ORDER_ITEM : contains
-    ORDER {
-        int id
-        date created_at
-        string status
-    }
-    PRODUCT ||--o{ ORDER_ITEM : "ordered in"
-    PRODUCT {
-        int id
-        string name
-        float price
-    }
-🔐 Authentication and Authorization
-This application uses JWT (JSON Web Tokens) for authentication and implements role-based authorization using .NET Identity. This ensures secure access to API endpoints based on user roles.
-💳 Payment Processing
-Payment processing is handled through Stripe integration, which includes support for coupon functionality. This allows for flexible pricing and promotional offers within the E-Commerce platform.
-🌉 API Gateway
-The application implements an API Gateway using Ocelot, providing a unified entry point for API requests and enabling features like:
-
-Request aggregation
-Routing
-Load balancing
-
-☁️ Cloud Messaging
-Azure Service Bus is integrated for messaging, utilizing both queue and topic functionalities. This enables robust, scalable communication between different components of the application.
-🤝 Contributing
-We welcome contributions to this project! Please follow these steps:
-
-Fork the repository
-Create a new branch: git checkout -b feature-branch-name
-Make your changes and commit them: git commit -m 'Add some feature'
-Push to the branch: git push origin feature-branch-name
-Submit a pull request
+### Installation
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/tahaet/Mango-Microservices-e-Commerce
+   cd ecommerce-app
