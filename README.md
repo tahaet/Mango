@@ -3,7 +3,9 @@
 
 A robust, full-stack E-Commerce application built using microservices architecture with .NET 8.
 
-🖼️ Samples
+🖼️ **Samples**
+
+
 ![image](https://github.com/user-attachments/assets/6cdb2a67-6be3-40bc-9b91-40c55a30da11)
 ![image](https://github.com/user-attachments/assets/e53fac4b-07a2-44b4-9968-43152c6b61c4)
 ![image](https://github.com/user-attachments/assets/c44d9893-867b-4f5b-b3b4-637ff587fc11)
