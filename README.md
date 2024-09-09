@@ -1,51 +1,48 @@
-# E-Commerce Application
+A robust, full-stack E-Commerce application built using microservices architecture with .NET 8.
 
-This project is a full-stack E-Commerce application developed with .NET 8. It features a REST API backend and a .NET 8 MVC frontend, providing a robust and secure platform for online shopping. The application integrates several advanced features, including payment processing, messaging, and API management.
 
-## Table of Contents
-- [Features](#features)
-- [Technologies Used](#technologies-used)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-  - [Database Setup](#database-setup)
-  - [Running the Application](#running-the-application)
-- [Architecture](#architecture)
-- [Security](#security)
-- [Payment Integration](#payment-integration)
-- [Messaging Integration](#messaging-integration)
-- [API Gateway](#api-gateway)
+🚀 Features
 
-## Features
-- **Backend:** Developed using .NET 8 REST APIs to handle all server-side logic.
-- **Frontend:** Built with .NET 8 MVC for dynamic and responsive user interfaces.
-- **Data Storage:** SQL Server is used for persistent data storage.
-- **Data Access:** Entity Framework (EF) is used for data access with a Code First approach.
-- **Security:** Secured API endpoints using JWT with role-based authorization provided by .NET Identity.
-- **Payment Integration:** Stripe payment gateway integrated with support for coupon functionality.
-- **API Gateway:** Implemented using Ocelot for managing multiple API services.
-- **Messaging:** Integrated Azure Service Bus for messaging, supporting both queues and topics.
+Full stack E-Commerce app with .NET 8 REST APIs for backend and .NET 8 MVC for frontend
+Microservices architecture for scalability and modularity
+SQL Server for data storage with Entity Framework (EF) for data access using code-first approach
+Secure API endpoints using JWT with role-based authorization via .NET Identity
+Stripe payment integration with coupon functionality
+API Gateway implementation using Ocelot
+Azure Service Bus messaging integration (queue and topic)
 
-## Technologies Used
-- **Backend:** .NET 8, ASP.NET Core REST APIs
-- **Frontend:** .NET 8 MVC
-- **Database:** SQL Server
-- **ORM:** Entity Framework Core (EF Core)
-- **Authentication & Authorization:** JWT, .NET Identity
-- **Payment Gateway:** Stripe
-- **API Gateway:** Ocelot
-- **Messaging:** Azure Service Bus (Queue and Topic)
+🛠️ Tech Stack
 
-## Getting Started
+Backend: .NET 8 REST APIs
+Frontend: .NET 8 MVC
+Database: SQL Server
+ORM: Entity Framework Core
+Authentication: JWT, .NET Identity
+Payment Processing: Stripe
+API Gateway: Ocelot
+Message Broker: Azure Service Bus
 
-### Prerequisites
-- [.NET 8 SDK](https://dotnet.microsoft.com/download)
-- [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
-- [Azure Account](https://azure.microsoft.com/en-us/free/) (for Service Bus integration)
-- [Stripe Account](https://stripe.com/) (for payment integration)
+📦 Microservices
 
-### Installation
-1. **Clone the Repository:**
-   ```bash
-   git clone https://github.com/tahaet/Mango-Microservices-e-Commerce
-   cd ecommerce-app
+API Gateway (Ocelot): Acts as a reverse proxy, routing external client requests to the appropriate microservices.
+Azure Service Bus (Queue & Topic): Facilitates asynchronous communication between microservices via message brokering.
+Auth API Service: Manages user authentication and authorization.
+Coupon API Service: Handles coupon-related functionalities.
+Product API Service: Manages product-related operations.
+Shopping Cart API Service: Oversees user shopping cart operations.
+Order API Service: Manages order processing and fulfillment.
+Email API Service: Sends email notifications to users.
+Payment Gateway: Processes payment transactions.
+Reward API Service: Manages user rewards.
+
+
+🚀 Getting Started
+
+Clone the repository
+Copygit clone https://github.com/tahaet/Mango-Microservices-e-Commerce.git
+
+Navigate to the project directory
+Set up your SQL Server and update connection strings
+Configure Azure Service Bus connection
+Set up Stripe API keys
+Run the individual microservices and the MVC frontend
