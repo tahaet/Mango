@@ -1,10 +1,7 @@
 # Mango-Microservices-e-Commerce
-<br/>
+<hr/>
 A robust, full-stack E-Commerce application built using microservices architecture with .NET 8.
-
-
-
-
+<br/>
 🚀 Features
 
 Full stack E-Commerce app with .NET 8 REST APIs for backend and .NET 8 MVC for frontend
