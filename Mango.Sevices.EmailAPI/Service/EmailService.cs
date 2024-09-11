@@ -10,10 +10,12 @@ namespace Mango.Sevices.EmailAPI.Service
     public class EmailService : IEmailService
     {
         private DbContextOptions<AppDbContext> _dbOptions;
+        private readonly IServiceProvider serviceProvider;
 
-        public EmailService(DbContextOptions<AppDbContext> dbOptions)
+        public EmailService(DbContextOptions<AppDbContext> dbOptions, IServiceProvider serviceProvider)
         {
             _dbOptions = dbOptions;
+            this.serviceProvider = serviceProvider;
         }
 
         public async Task EmailCartAndLog(CartDto cartDto)
@@ -33,6 +35,20 @@ namespace Mango.Sevices.EmailAPI.Service
             message.Append("</ul>");
 
             await LogAndEmail(message.ToString(), cartDto.CartHeader.Email);
+            await SendEmail(cartDto.CartHeader.Email, message.ToString(), "New Order");
+        }
+
+
+        public async Task SendEmail(string to, string body, string subject)
+        {
+            // Create a scope to resolve the scoped service
+            using (var scope = serviceProvider.CreateScope())
+            {
+                var emailSender = scope.ServiceProvider.GetRequiredService<IEmailSender>();
+
+                // Now you can use the scoped EmailSender service within this method
+                await emailSender.SendAsync(to, body,subject);
+            }
         }
 
         public async Task LogOrderPlaced(RewardsMessage rewardsMessage)

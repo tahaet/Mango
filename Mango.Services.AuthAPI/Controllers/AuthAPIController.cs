@@ -18,12 +18,14 @@ namespace Mango.Services.AuthAPI.Controllers
         private readonly IMessageBus messageBus;
         private readonly IConfiguration configuration;
         private ResponseDto responseDto;
+        public event Func<string, Task> OnUserRegister;
         public AuthAPIController(IAuthService authService,IMessageBus messageBus,IConfiguration configuration)
         {
             this.authService = authService;
             this.messageBus = messageBus;
             this.configuration = configuration;
             responseDto = new ResponseDto();
+            OnUserRegister += UserRegisterHandler;
         }
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody]RegistrationRequestDto registrationRequestDto)
@@ -35,9 +37,29 @@ namespace Mango.Services.AuthAPI.Controllers
                 responseDto.Message = errorMessage;
                 return BadRequest(responseDto);
             }
-            await messageBus.PublishMessage(registrationRequestDto.Email, configuration.GetValue<string>("TopicAndQueueNames:RegisterUserQueue"));
+            if (OnUserRegister != null)
+            {
+                foreach (var handler in OnUserRegister.GetInvocationList())
+                {
+                    if (handler is Func<string, Task> asyncHandler)
+                    {
+                        await asyncHandler(registrationRequestDto.Email);
+                    }
+                    else
+                    {
+                        handler.DynamicInvoke(registrationRequestDto.Email);
+                    }
+                }
+            }
             return Ok(responseDto);
         }
+
+        protected virtual async Task UserRegisterHandler(string email)
+        {
+            await messageBus.PublishMessage(email, configuration.GetValue<string>("TopicAndQueueNames:RegisterUserQueue"));
+        }
+
+
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDto loginRequestDto)
         {

@@ -3,6 +3,7 @@ using Mango.Services.EmailAPI.Messaging;
 using Mango.Services.ShoppingCartAPI.Extension;
 using Mango.Sevices.EmailAPI.Service;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -15,6 +16,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
 });
+
+
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 var optionBuilder = new DbContextOptionsBuilder<AppDbContext>();
 optionBuilder.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));

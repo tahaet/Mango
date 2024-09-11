@@ -13,7 +13,7 @@ namespace Mango.Services.ShoppingCartAPI.Controllers
 {
     [Route("api/cart")]
     [ApiController]
-    public class CartController : ControllerBase
+    public class CartControllerAPI : ControllerBase
     {
         private ResponseDto _response = new ResponseDto();
         private readonly AppDbContext _db;
@@ -23,7 +23,7 @@ namespace Mango.Services.ShoppingCartAPI.Controllers
         private readonly IMessageBus _messageBus;
         private readonly IConfiguration _configuration;
 
-        public CartController(AppDbContext db, IMapper mapper, IProductService productService, 
+        public CartControllerAPI(AppDbContext db, IMapper mapper, IProductService productService, 
             ICouponService couponService, IMessageBus messageBus, IConfiguration configuration)
         {
             _db = db;

@@ -102,7 +102,7 @@ namespace Mango.Web.Controllers
         }
 
         [HttpPost("EmailCart")]
-        public async Task<IActionResult> EmailCart(CartDto cartDto)
+        public async Task<IActionResult> EmailCart()
         {
             var cart = await LoadCartDtoBasednLoggedInUser();
             var Email = User.Claims.Where(x=>x.Type==JwtRegisteredClaimNames.Email)?.FirstOrDefault()?.Value;
@@ -144,7 +144,11 @@ namespace Mango.Web.Controllers
                 TempData["success"] = "Cart updated successfully";
                 return RedirectToAction(nameof(CartIndex));
             }
-            return View();
+            else
+            {
+                TempData["error"] = "Cart could not be updated ";
+                return RedirectToAction(nameof(CartIndex));
+            }
         }
     }
 }
