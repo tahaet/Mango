@@ -1,9 +1,9 @@
 ﻿
-using Azure.Core;
+using Microsoft.Extensions.Configuration;
 using System.Net;
 using System.Net.Mail;
 
-namespace Mango.Sevices.EmailAPI.Service
+namespace Mango.Utility.Email
 {
     public class EmailSender : IEmailSender
     {

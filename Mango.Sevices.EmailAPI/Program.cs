@@ -2,6 +2,7 @@ using Mango.Services.EmailAPI.Data;
 using Mango.Services.EmailAPI.Messaging;
 using Mango.Services.ShoppingCartAPI.Extension;
 using Mango.Sevices.EmailAPI.Service;
+using Mango.Utility.Email;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 var builder = WebApplication.CreateBuilder(args);
@@ -20,9 +21,13 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 
-var optionBuilder = new DbContextOptionsBuilder<AppDbContext>();
-optionBuilder.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-builder.Services.AddSingleton(new EmailService(optionBuilder.Options));
+//var optionBuilder = new DbContextOptionsBuilder<AppDbContext>();
+//optionBuilder.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+builder.Services.AddSingleton<EmailService>(sp =>
+{
+    var options = sp.GetRequiredService<DbContextOptions<AppDbContext>>();
+    return new EmailService(options, sp);
+}); 
 builder.Services.AddSingleton<IAzureServiceBusConsumer, AzureServiceBusConsumer>();
 var app = builder.Build();
 

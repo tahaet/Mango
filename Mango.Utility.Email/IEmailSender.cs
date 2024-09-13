@@ -1,4 +1,4 @@
-﻿namespace Mango.Sevices.EmailAPI.Service
+﻿namespace Mango.Utility.Email
 {
     public interface IEmailSender
     {

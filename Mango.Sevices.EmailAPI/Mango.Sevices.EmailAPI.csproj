@@ -25,4 +25,8 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Mango.Utility.Email\Mango.Utility.Email.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -225,7 +225,9 @@ namespace Mango.Services.OrderAPI.Controllers
                         UserId = orderHeader.UserId
                     };
                     string topicName = _configuration.GetValue<string>("TopicAndQueueNames:OrderCreatedTopic");
+                    string queueName = _configuration.GetValue<string>("TopicAndQueueNames:OrderCreatedQueue");
                     await _messageBus.PublishMessage(rewardDto, topicName);
+                    await _messageBus.PublishMessage(orderHeader, queueName);
                     _response.Result = _mapper.Map<OrderHeaderDto>(orderHeader);
                 }
             }

@@ -5,6 +5,7 @@ using Mango.Services.EmailAPI.Data;
 
 using Mango.Sevices.EmailAPI.Models;
 using Mango.Services.EmailAPI.Message;
+using Mango.Utility.Email;
 namespace Mango.Sevices.EmailAPI.Service
 {
     public class EmailService : IEmailService
