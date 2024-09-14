@@ -8,9 +8,9 @@ A robust, full-stack E-Commerce application built using microservices architectu
 
 ![image](https://github.com/user-attachments/assets/6cdb2a67-6be3-40bc-9b91-40c55a30da11)
 ![image](https://github.com/user-attachments/assets/e53fac4b-07a2-44b4-9968-43152c6b61c4)
-![image](https://github.com/user-attachments/assets/c44d9893-867b-4f5b-b3b4-637ff587fc11)
-![image](https://github.com/user-attachments/assets/ce538890-2b25-4c90-81b0-49c939d291ee)
-![image](https://github.com/user-attachments/assets/8590a332-a0b4-4100-aca3-11508146657d)
+![image](https://github.com/user-attachments/assets/95f8afa6-6c86-46fb-85de-6e2575e652bc)
+![image](https://github.com/user-attachments/assets/62518e63-790b-4af8-b8ba-a3dd3aa8c714)
+![image](https://github.com/user-attachments/assets/8aa20a5e-2e92-4742-bf9b-d90d37fa459b)
 ![image](https://github.com/user-attachments/assets/8a58af6d-3147-4de4-9766-b76ee72abc6c)
 ![image](https://github.com/user-attachments/assets/38290327-79c7-424e-bb99-2973a4779e59)
 ![image](https://github.com/user-attachments/assets/ff97123a-f22f-4d43-954b-24892d27495f)
